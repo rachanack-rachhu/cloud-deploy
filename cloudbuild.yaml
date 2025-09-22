@@ -1,5 +1,5 @@
 options:
-  logging: CLOUD_LOGGING_ONLY  
+  logging: CLOUD_LOGGING_ONLY
 
 steps:
   # Step 1: Build Docker image
@@ -20,7 +20,7 @@ steps:
         'us-central1-docker.pkg.dev/$PROJECT_ID/hello-repo/hello-app:$SHORT_SHA'
       ]
 
-  # Step 3: Create Cloud Deploy release
+  # Step 3: Create Cloud Deploy release (no Skaffold required)
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     args:
@@ -31,5 +31,6 @@ steps:
         'release-$SHORT_SHA',
         '--delivery-pipeline=hello-pipeline',
         '--region=us-central1',
-        '--images=hello-app=us-central1-docker.pkg.dev/$PROJECT_ID/hello-repo/hello-app:$SHORT_SHA'
+        '--images=hello-app=us-central1-docker.pkg.dev/$PROJECT_ID/hello-repo/hello-app:$SHORT_SHA',
+        '--source=.'   # 👈 prevents it from looking for skaffold.yaml
       ]
