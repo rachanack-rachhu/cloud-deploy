@@ -1,0 +1,5 @@
+apiVersion: deploy.cloud.google.com/v1
+kind: ReleaseConfig
+metadata:
+  name: hello-release-config
+deliveryPipeline: hello-pipeline
