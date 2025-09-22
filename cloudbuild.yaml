@@ -20,7 +20,7 @@ steps:
         'us-central1-docker.pkg.dev/$PROJECT_ID/hello-repo/hello-app:$SHORT_SHA'
       ]
 
-  # Step 3: Create Cloud Deploy release (no Skaffold required)
+  # Step 3: Create Cloud Deploy release (with deploy config)
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     args:
@@ -32,5 +32,5 @@ steps:
         '--delivery-pipeline=hello-pipeline',
         '--region=us-central1',
         '--images=hello-app=us-central1-docker.pkg.dev/$PROJECT_ID/hello-repo/hello-app:$SHORT_SHA',
-        '--source=.'   # 👈 prevents it from looking for skaffold.yaml
+        '--deploy-config=deploy-config.yaml'
       ]
