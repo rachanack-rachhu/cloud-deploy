@@ -8,7 +8,7 @@ steps:
       [
         'build',
         '-t',
-        'us-central1-docker.pkg.dev/$PROJECT_ID/hello-repo/hello-app:$SHORT_SHA',
+        'us-central1-docker.pkg.dev/horizontal-leaf-470209-f0/hello-repo/hello-app:$SHORT_SHA',
         '.'
       ]
 
@@ -17,10 +17,10 @@ steps:
     args:
       [
         'push',
-        'us-central1-docker.pkg.dev/$PROJECT_ID/hello-repo/hello-app:$SHORT_SHA'
+        'us-central1-docker.pkg.dev/horizontal-leaf-470209-f0/hello-repo/hello-app:$SHORT_SHA'
       ]
 
-  # Step 3: Create Cloud Deploy release
+  # Step 3: Deploy using Cloud Deploy
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     args:
@@ -31,5 +31,5 @@ steps:
         'release-$SHORT_SHA',
         '--delivery-pipeline=hello-pipeline',
         '--region=us-central1',
-        '--images=hello-app=us-central1-docker.pkg.dev/$PROJECT_ID/hello-repo/hello-app:$SHORT_SHA'
+        '--images=hello-app=us-central1-docker.pkg.dev/horizontal-leaf-470209-f0/hello-repo/hello-app:$SHORT_SHA'
       ]
