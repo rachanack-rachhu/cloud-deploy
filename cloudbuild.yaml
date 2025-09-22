@@ -4,20 +4,32 @@ options:
 steps:
   # Step 1: Build Docker image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/hello-repo/hello-app:$SHORT_SHA', '.']
+    args:
+      [
+        'build',
+        '-t',
+        'us-central1-docker.pkg.dev/$PROJECT_ID/hello-repo/hello-app:$SHORT_SHA',
+        '.'
+      ]
 
   # Step 2: Push Docker image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/hello-repo/hello-app:$SHORT_SHA']
+    args:
+      [
+        'push',
+        'us-central1-docker.pkg.dev/$PROJECT_ID/hello-repo/hello-app:$SHORT_SHA'
+      ]
 
-  # Step 3: Deploy using Cloud Deploy
+  # Step 3: Create Cloud Deploy release
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     args:
-      - 'deploy'
-      - 'releases'
-      - 'create'
-      - 'release-$SHORT_SHA'
-      - '--delivery-pipeline=hello-pipeline'
-      - '--region=us-central1'
-      - '--images=hello-app=us-central1-docker.pkg.dev/$PROJECT_ID/hello-repo/hello-app:$SHORT_SHA']
+      [
+        'deploy',
+        'releases',
+        'create',
+        'release-$SHORT_SHA',
+        '--delivery-pipeline=hello-pipeline',
+        '--region=us-central1',
+        '--images=hello-app=us-central1-docker.pkg.dev/$PROJECT_ID/hello-repo/hello-app:$SHORT_SHA'
+      ]
